@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Pink Story ✨</title>
+    <style>
+        body { 
+            background: linear-gradient(135deg, #fbcfe8 0%, #f472b6 100%); 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            font-family: 'Poppins', sans-serif; 
+            padding: 30px 20px;
+            box-sizing: border-box;
+            text-align: center;
+            color: #831843;
+            overflow-x: hidden;
+        }
+
+        /* --- SCREEN SATPAM / PINTU KUNCI (PINK TEMA) --- */
+        #lock-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fbcfe8 0%, #f472b6 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 0.8s ease;
+        }
+
+        .door-card {
+            background: #fff0f6;
+            border: 2px solid #f472b6;
+            padding: 30px;
+            border-radius: 25px;
+            max-width: 320px;
+            width: 90%;
+            box-shadow: 0 15px 30px rgba(219, 39, 119, 0.2);
+        }
+
+        .guard-icon {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+        }
+
+        .door-card h2 {
+            font-size: 1.2rem;
+            color: #db2777;
+            margin-bottom: 10px;
+        }
+
+        .door-card p {
+            font-size: 0.85rem;
+            color: #9d174d;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .door-card input {
+            width: 100%;
+            padding: 12px;
+            background: #fff;
+            border: 2px solid #fbcfe8;
+            border-radius: 12px;
+            color: #831843;
+            font-size: 1rem;
+            text-align: center;
+            outline: none;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+        }
+
+        .door-card input:focus { border-color: #ec4899; }
+
+        .door-card button {
+            width: 100%;
+            padding: 12px;
+            background: #ec4899;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 10px rgba(236, 72, 153, 0.3);
+        }
+
+        .door-card button:hover { background: #db2777; }
+
+        .error-msg {
+            color: #be123c;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* --- KONTEN UTAMA --- */
+        #main-content {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .container { 
+            position: relative; 
+            width: 280px; 
+            height: 280px; 
+            overflow: hidden; 
+            border-radius: 20px;
+            margin-bottom: 20px;
+            background: #fff0f6;
+            box-shadow: 0 10px 20px rgba(219, 39, 119, 0.15);
+        }
+
+        .img-slide { 
+            position: absolute; 
+            width: 100%; 
+            height: 100%; 
+            object-fit: contain;
+        }
+
+        /* Foto 1 */
+        .img-1 { 
+            opacity: 0;
+            filter: brightness(0.9) contrast(110%);
+            animation: drawPhoto 4s ease-out forwards;
+        }
+
+        /* Foto 2 */
+        .img-2 { 
+            opacity: 0;
+            clip-path: inset(0 100% 0 0);
+            animation: wipeIn 2s ease-in-out forwards, drawPhoto2 4s ease-out forwards;
+            animation-delay: 15s, 15s;
+        }
+
+        /* Gambar Piala */
+        .img-trophy {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            opacity: 0;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            animation: wipeIn 1.5s ease-in-out forwards, drawPhoto2 4s ease-out forwards;
+            animation-delay: 26s, 26s;
+        }
+
+        @keyframes drawPhoto {
+            0% { opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes drawPhoto2 {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes wipeIn {
+            0% { opacity: 1; clip-path: inset(0 100% 0 0); }
+            100% { opacity: 1; clip-path: inset(0 0 0 0); }
+        }
+
+        @keyframes fadeInText { to { opacity: 1; } }
+        @keyframes typing1 { from { width: 0 } to { width: 100% } }
+        @keyframes blink { from, to { border-color: transparent } 50% { border-color: #be123c; } }
+
+        /* Teks 1 */
+        #text-1 {
+            color: #be123c;
+            font-size: 1.1rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 3px solid #be123c;
+            width: 0;
+            margin: 0 auto;
+            animation: typing1 3s steps(35, end) forwards, blink 0.75s step-end infinite;
+            animation-delay: 4s;
+            min-height: 1.5em;
+        }
+
+        /* Teks 2 */
+        #text-2 {
+            color: #831843;
+            font-size: 0.95rem;
+            font-weight: 600;
+            max-width: 350px;
+            line-height: 1.5;
+            opacity: 0;
+            margin-top: 15px;
+            animation: fadeInText 1s ease-in forwards;
+            animation-delay: 20s;
+        }
+
+        /* Teks Akhir (Piala Box Pink) */
+        #text-trophy {
+            color: #831843;
+            font-size: 0.9rem;
+            font-weight: 500;
+            max-width: 360px;
+            line-height: 1.6;
+            text-align: left;
+            background: #fff0f6;
+            padding: 20px;
+            border-radius: 20px;
+            border: 2px solid #f472b6;
+            box-shadow: 0 10px 20px rgba(219, 39, 119, 0.15);
+            opacity: 0;
+            margin-top: 10px;
+            animation: fadeInText 1s ease-in forwards;
+            animation-delay: 31s;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LAGU BACKSOUND -->
+    <audio id="bg-music" loop>
+        <source src="https://litter.catbox.moe/svyhwe11radymm5s.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- SCREEN SATPAM / PINTU -->
+    <div id="lock-screen">
+        <div class="door-card">
+            <div class="guard-icon">👮‍♂️🚪</div>
+            <h2>Pintu Terkunci!</h2>
+            <p>Eitss mau masuk? Masukin password dulu sama satpamnya ya!</p>
+            <input type="password" id="pass-input" placeholder="Masukkan password...">
+            <button onclick="checkPass()">Buka Pintu</button>
+            <div class="error-msg" id="error-msg">Password salah! Coba ingat-ingat lagi.</div>
+        </div>
+    </div>
+
+    <!-- KONTEN UTAMA WEB -->
+    <div id="main-content">
+        <div class="container">
+            <img src="https://litter.catbox.moe/0ckn7gakfaetclea.jpeg" class="img-slide img-1" alt="Foto 1">
+            <img src="https://litter.catbox.moe/6dd150v1y5qm0r69.jpeg" class="img-slide img-2" alt="Foto 2">
+        </div>
+
+        <div id="text-1">sayanggg nanti kita seperti ini yyaaa</div>
+
+        <div id="text-2">nanti kitaa keliling qualitytimee ya sayanggg yang seru yang banyak omong yang puas kita cerita gimanaa kita selamaaa ada jarakk kaya sekarang</div>
+
+        <img src="https://litter.catbox.moe/j8qyilupajn47acl.jpeg" class="img-trophy" alt="Piala">
+
+        <div id="text-trophy">
+            In the game of life, having you by my side is already my biggest win. 🏆<br><br>
+            Makasih ya udah nemenin hari-hari aku, dengerin semua cerita aku, dan selalu jadi pendukung nomor satu buat aku. Aku bangga banget sama semua proses dan kerja keras yang udah kamu lewati sampai hari ini. Tetap jadi diri kamu yang hebat ya. Kamu bakal selalu jadi pemenang di hati aku, hari ini dan seterusnya.<br><br>
+            To my favorite person & my forever champion. 🏆<br>
+            Terima kasih udah selalu jadi alasan aku tersenyum dan jadi pemenang di hati aku setiap harinya. Love you so much!
+        </div>
+    </div>
+
+    <script>
+        function checkPass() {
+            const inputVal = document.getElementById("pass-input").value;
+            const errorText = document.getElementById("error-msg");
+            const lockScreen = document.getElementById("lock-screen");
+            const mainContent = document.getElementById("main-content");
+            const music = document.getElementById("bg-music");
+
+            if (inputVal === "16326") {
+                // Putar Musik
+                music.play().catch(e => console.log("Audio play error:", e));
+
+                // Transisi Pintu Kebuka
+                lockScreen.style.opacity = "0";
+                setTimeout(() => {
+                    lockScreen.style.display = "none";
+                    mainContent.style.display = "flex";
+                }, 800);
+            } else {
+                errorText.style.display = "block";
+                document.getElementById("pass-input").value = "";
+            }
+        }
+    </script>
+</body>
+  </html>
+  
